@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوت إشعارات الشحن - NatureCare</title>
+    <link href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .card {
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            border-radius: 10px 10px 0 0;
+            font-weight: bold;
+        }
+        .status-badge {
+            font-size: 1.2rem;
+            padding: 8px 16px;
+        }
+        .features-list {
+            padding-right: 20px;
+        }
+        .features-list li {
+            margin-bottom: 10px;
+        }
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body data-bs-theme="dark">
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-header bg-primary text-white p-4">
+                <h1 class="mb-0">بوت إشعارات الشحن - NatureCare</h1>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2>لوحة التحكم</h2>
+                    <span class="badge bg-success status-badge" id="status-badge">البوت نشط</span>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header bg-info text-white">
+                                ميزات البوت
+                            </div>
+                            <div class="card-body">
+                                <ul class="features-list">
+                                    <li>إضافة إشعارات شحن مع صور</li>
+                                    <li>إرسال تذكيرات آلية للعملاء</li>
+                                    <li>البحث عن الإشعارات بالاسم أو رقم الهاتف</li>
+                                    <li>تحليل صور الشحن باستخدام الذكاء الاصطناعي</li>
+                                    <li>نظام متكامل لإدارة المسؤولين والصلاحيات</li>
+                                    <li>تخصيص قوالب الرسائل النصية</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header bg-info text-white">
+                                إحصائيات النظام
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>حالة الويب هوك:</span>
+                                    <span class="badge bg-primary">نشط</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>أوقات استجابة البوت:</span>
+                                    <span class="badge bg-info">سريعة</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>حالة الذكاء الاصطناعي:</span>
+                                    <span class="badge bg-success">متصل</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>حالة Twilio:</span>
+                                    <span class="badge bg-secondary">متصل</span>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <span>آخر تحديث:</span>
+                                    <span id="last-updated">{{ last_updated }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mt-4">
+                    <div class="card-header bg-info text-white">
+                        بدء استخدام البوت
+                    </div>
+                    <div class="card-body">
+                        <ol>
+                            <li>افتح تطبيق تيليجرام وابحث عن بوت NatureCare</li>
+                            <li>اضغط على زر البدء (Start)</li>
+                            <li>استخدم الأوامر المتاحة لإدارة الإشعارات</li>
+                            <li>للمساعدة، أرسل أمر /help</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header bg-secondary text-white">
+                حالة النظام
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-between mb-2">
+                    <span>عنوان البوت:</span>
+                    <a href="https://t.me/NatureCareShippingBot" target="_blank">@NatureCareShippingBot</a>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>عنوان الويب هوك:</span>
+                    <span>{{ webhook_url }}</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>نقاط النهاية المتاحة:</span>
+                    <ul>
+                        <li>/health - فحص صحة النظام</li>
+                        <li>/{{ token_path }} - نقطة نهاية الويب هوك</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>NatureCare Shipping Bot © {{ current_year }} | جميع الحقوق محفوظة</p>
+        </div>
+    </div>
+
+    <script>
+        // تحديث التاريخ والوقت الحاليين
+        function updateDateTime() {
+            const now = new Date();
+            document.getElementById('last-updated').textContent = now.toLocaleString('ar-SA');
+        }
+        
+        // فحص حالة البوت كل 30 ثانية
+        function checkBotStatus() {
+            fetch('/health')
+                .then(response => response.json())
+                .then(data => {
+                    const statusBadge = document.getElementById('status-badge');
+                    if (data.status === 'ok') {
+                        statusBadge.className = 'badge bg-success status-badge';
+                        statusBadge.textContent = 'البوت نشط';
+                    } else {
+                        statusBadge.className = 'badge bg-danger status-badge';
+                        statusBadge.textContent = 'البوت متوقف';
+                    }
+                    updateDateTime();
+                })
+                .catch(error => {
+                    console.error('Error checking bot status:', error);
+                    const statusBadge = document.getElementById('status-badge');
+                    statusBadge.className = 'badge bg-warning status-badge';
+                    statusBadge.textContent = 'حالة البوت غير معروفة';
+                    updateDateTime();
+                });
+        }
+        
+        // تحديث الحالة عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            checkBotStatus();
+            // تحديث الحالة كل 30 ثانية
+            setInterval(checkBotStatus, 30000);
+        });
+    </script>
+</body>
+</html>
